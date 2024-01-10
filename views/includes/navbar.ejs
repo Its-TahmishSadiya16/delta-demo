@@ -1,0 +1,136 @@
+<style>
+    .btn-search {
+        background-color: #fe424d;
+        color: #fff;
+        border-radius: 25px;
+        padding: 0 1rem 0 1rem;
+    }
+
+    .btn-search:hover {
+        background-color: #fe424d;
+        color: #fff;
+    }
+
+    .btn-search i {
+        display: inline;
+        margin-right: 0.5rem;
+    }
+
+    .search-input {
+        border-radius: 25px;
+        padding: 0.5rem 3rem 0.5rem 3rem;
+        font-size: 0.9rem;
+    }
+
+    /* Add this CSS to style the dropdown-like behavior */
+.result-box {
+    top: 100%;
+    width: 400px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+/* Add this CSS for the result box */
+/* .result-box {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    z-index: 1000;
+    width: 100px; /* Adjust this value as needed */
+    /* max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+} */ 
+
+/* Other existing styles... */
+
+
+.dropdown-item {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+ 
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/listings"><i class="fa fa-compass" aria-hidden="true"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <a class="nav-link" href="/listings">Explore</a>
+
+
+            </div>
+            <div class="navbar-nav ms-auto">
+                <form class="d-flex " role="search" id="searchForm">
+                    <input id="searchInput" class="form-control me-2 search-input" type="search"
+                        placeholder="Search &nbsp;destination" aria-label="Search">
+                    <button class="btn btn-search" type="submit"><i
+                            class="fa-solid fa-magnifying-glass"></i>Search</button>
+                            
+                </form>
+                <div class="result-box position-absolute bg-white border rounded-3 shadow" id="searchDropdown" style="display: none;">   </div>
+                <script>
+         
+          
+         let availableKeywords = ["INDIA", "AMERICA", "FRANCE", "JAPAN", "KARANJA"];
+const resultBox = document.getElementById("searchDropdown");
+const inputBox = document.getElementById("searchInput");
+
+inputBox.addEventListener("input", function () {
+    let input = inputBox.value.toLowerCase();
+    let filteredOptions = availableKeywords.filter((keyword) => keyword.toLowerCase().includes(input));
+    displayOptions(filteredOptions);
+});
+
+document.addEventListener("click", function (event) {
+    if (!resultBox.contains(event.target) && event.target !== inputBox) {
+        resultBox.style.display = "none";
+    }
+});
+
+function displayOptions(options) {
+    if (options.length === 0) {
+        resultBox.innerHTML = "";
+        resultBox.style.display = "none";
+        return;
+    }
+
+    let optionList = options.map((option) => `<div class="dropdown-item" onclick="selectOption('${option}')">${option}</div>`).join("");
+    resultBox.innerHTML = optionList;
+    resultBox.style.display = "block";
+}
+
+function selectOption(option) {
+    inputBox.value = option;
+    resultBox.style.display = "none";
+}
+
+            </script>
+              
+             </div>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/listings/new">Airbnb your home</a>
+
+                <% if(!currUser){ %>
+                    <a class="nav-link " href="/signup"><b>Signup</b></a>
+                    <a class="nav-link" href="/login"><b>Login</b></a>
+                    <% } %>
+                        <% if(currUser){ %>
+                            <a class="nav-link" href="/logout"><b>Logout</b></a>
+                            <% } %>
+            </div>
+        </div>
+    </div>
+</nav>
